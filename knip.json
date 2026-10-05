@@ -1,5 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "project": ["src/**/*.ts"],
-  "ignoreDependencies": ["@antfu/utils", "taze", "@antfu/skills"]
+  "entry": ["src/page-actions/index.ts", "src/page-actions/base-ui.ts"],
+  "project": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "e2e/**/*.ts", "scripts/**/*.ts"],
+  "ignoreDependencies": ["tailwindcss"]
 }

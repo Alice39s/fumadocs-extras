@@ -1,82 +1,93 @@
 {
-  "name": "pkg-placeholder",
-  "type": "module",
-  "version": "0.0.0",
-  "packageManager": "pnpm@12.8.1",
-  "description": "_description_",
-  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "name": "fumadocs-extras",
+  "version": "0.0.1",
+  "description": "Drop-in extras for Fumadocs UI, starting with a grouped \"Open in AI\" page actions menu",
+  "keywords": [
+    "ai",
+    "chatgpt",
+    "claude",
+    "fumadocs",
+    "page-actions",
+    "react"
+  ],
+  "homepage": "https://github.com/Alice39s/fumadocs-extras#readme",
+  "bugs": "https://github.com/Alice39s/fumadocs-extras/issues",
   "license": "MIT",
-  "funding": "https://github.com/sponsors/antfu",
-  "homepage": "https://github.com/antfu/pkg-placeholder#readme",
+  "author": "Alice39s",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/antfu/pkg-placeholder.git"
+    "url": "git+https://github.com/Alice39s/fumadocs-extras.git"
   },
-  "bugs": "https://github.com/antfu/pkg-placeholder/issues",
-  "keywords": [],
-  "sideEffects": false,
-  "exports": {
-    ".": "./dist/index.mjs",
-    "./package.json": "./package.json"
-  },
-  "types": "./dist/index.d.mts",
   "files": [
+    "css",
     "dist"
   ],
-  "scripts": {
-    "build": "tsdown",
-    "dev": "tsdown --watch",
-    "knip": "knip",
-    "lint": "eslint --cache",
-    "prepack": "nr build",
-    "release": "bumpp",
-    "start": "tsx src/index.ts",
-    "test": "pnpm run build && vitest",
-    "typecheck": "tsc",
-    "ci": "pnpm run lint && pnpm run typecheck && pnpm run knip && pnpm run test --run",
-    "prepare": "git config core.hooksPath .githooks && simple-git-hooks && skills-npm"
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    "./page-actions": "./dist/page-actions/index.js",
+    "./page-actions/base-ui": "./dist/page-actions/base-ui.js",
+    "./package.json": "./package.json",
+    "./css/*": "./css/*"
   },
-  "scripts-info": {
-    "build": "Build the library for publishing",
-    "dev": "Rebuild on change during development",
-    "knip": "Find unused files, exports and dependencies",
-    "lint": "Check for code style issues",
-    "prepack": "Build before publishing",
-    "release": "Bump version and publish a release",
-    "start": "Run the entry file",
-    "test": "Run the test suite",
-    "typecheck": "Check types",
-    "ci": "Run the full continuous integration pipeline",
-    "prepare": "Set up git hooks and skills"
+  "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
+    "check": "vp check",
+    "lint": "vp lint",
+    "fmt": "vp fmt",
+    "knip": "knip",
+    "test": "vp test",
+    "e2e": "node e2e/run.ts",
+    "release": "bumpp",
+    "ci": "vp check && knip && vp pack && vp test run",
+    "prepack": "vp pack",
+    "prepare": "vp config"
+  },
+  "dependencies": {
+    "lucide-react": "catalog:prod"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "catalog:cli",
-    "@antfu/ni": "catalog:cli",
-    "@antfu/skills": "catalog:agentic",
-    "@antfu/utils": "catalog:inlined",
+    "@arethetypeswrong/core": "catalog:cli",
+    "@fumadocs/base-ui": "catalog:fumadocs",
+    "@tailwindcss/oxide": "catalog:testing",
+    "@tailwindcss/vite": "catalog:testing",
     "@types/node": "catalog:types",
+    "@types/react": "catalog:types",
+    "@types/react-dom": "catalog:types",
+    "@vitest/browser-playwright": "catalog:testing",
     "bumpp": "catalog:cli",
-    "eslint": "catalog:cli",
-    "eslint-plugin-slop": "catalog:cli",
-    "eslint-plugin-sonarjs": "catalog:cli",
+    "fumadocs-core": "catalog:fumadocs",
+    "fumadocs-ui": "catalog:fumadocs",
     "knip": "catalog:cli",
-    "nano-staged": "catalog:cli",
+    "next": "catalog:fumadocs",
+    "playwright": "catalog:testing",
     "publint": "catalog:cli",
-    "simple-git-hooks": "catalog:cli",
-    "skills-npm": "catalog:agentic",
-    "taze": "catalog:cli",
-    "tsdown": "catalog:cli",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "tailwindcss": "catalog:testing",
     "tsdown-stale-guard": "catalog:testing",
     "tsnapi": "catalog:testing",
-    "tsx": "catalog:cli",
     "typescript": "catalog:cli",
     "vite": "catalog:cli",
-    "vitest": "catalog:testing"
+    "vite-plus": "catalog:cli",
+    "vitest-browser-react": "catalog:testing"
   },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && pnpm run ci && pnpx nano-staged"
+  "peerDependencies": {
+    "@fumadocs/base-ui": "^16.10.0",
+    "fumadocs-core": "^16.10.0",
+    "fumadocs-ui": "^16.10.0",
+    "react": "^19.2.0"
   },
-  "nano-staged": {
-    "*.{js,ts,tsx,json,css,md,yaml,vue}": "eslint --fix --no-warn-ignored"
-  }
+  "peerDependenciesMeta": {
+    "@fumadocs/base-ui": {
+      "optional": true
+    },
+    "fumadocs-ui": {
+      "optional": true
+    }
+  },
+  "packageManager": "pnpm@12.8.1"
 }

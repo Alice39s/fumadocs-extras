@@ -1,4 +1,4 @@
-name: Unit Test
+name: CI
 
 on:
   push:
@@ -6,14 +6,19 @@ on:
   pull_request:
     branches: [main]
 
-permissions: {}
+permissions:
+  contents: read
 
 jobs:
-  unit-test:
-    uses: sxzz/workflows/.github/workflows/unit-test.yml@main
-
-  # coverage:
-  #   uses: sxzz/workflows/.github/workflows/coverage.yml@main
-  #   needs: unit-test
-  #   permissions:
-  #     id-token: write
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: voidzero-dev/setup-vp@v1.21.1
+        with:
+          node-version: 24
+          cache: true
+          run-install: true
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm run ci
+      - run: pnpm run e2e
