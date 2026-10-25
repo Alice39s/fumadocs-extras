@@ -1,7 +1,6 @@
 # fumadocs-extras
 
-[![npm version][npm-version-src]][npm-version-href]
-[![License][license-src]][license-href]
+[![npm version][npm-version-src]][npm-version-href] [![License][license-src]][license-href]
 
 Extra components for [Fumadocs](https://fumadocs.dev) UI.
 
@@ -48,7 +47,6 @@ Pick the entry that matches the package your app imports Fumadocs UI from:
 ```tsx
 import { MarkdownCopyButton } from 'fumadocs-ui/layouts/docs/page'
 import { ViewOptionsPopover } from 'fumadocs-extras/page-actions'
-
 ;<div className="flex flex-row items-center gap-2 border-b pb-6">
   <MarkdownCopyButton markdownUrl={markdownUrl} />
   <ViewOptionsPopover
@@ -92,13 +90,13 @@ All items are on by default. Turn off a group or an item with `items`. The setti
 <ViewOptionsPopover locale="zh-CN" labels={{ open: '问 AI' }} />
 ```
 
-| Key                                                                                                    | English                                       |
-| ------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
-| `open`                                                                                                 | Open                                          |
-| `prompt`                                                                                               | Read {url}, I want to ask questions about it. |
-| `github`                                                                                               | Open in GitHub                                |
-| `markdown`                                                                                             | View as Markdown                              |
-| `scira`, `perplexity`, `grok`, `chatgpt`, `claude`, `claude-desktop`, `claude-code`, `codex`, `cursor` | Open in Scira AI, Open in Perplexity, …       |
+| Key                                                                                                    | English                                                  |
+| ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------- |
+| `open`                                                                                                 | Open                                                     |
+| `prompt`                                                                                               | Read {url} in full first. I have some questions for you: |
+| `github`                                                                                               | Open in GitHub                                           |
+| `markdown`                                                                                             | View as Markdown                                         |
+| `scira`, `perplexity`, `grok`, `chatgpt`, `claude`, `claude-desktop`, `claude-code`, `codex`, `cursor` | Open in scira.ai, Open in perplexity.ai, …               |
 
 `{url}` in `prompt` is replaced with the page URL. All props are serializable, so a server component can pass them.
 
