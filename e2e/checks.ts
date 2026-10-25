@@ -7,11 +7,11 @@ const defaultMenu = [
   'Open in GitHub',
   'View as Markdown',
   '|',
-  'Open in Scira AI',
-  'Open in Perplexity',
-  'Open in Grok',
-  'Open in ChatGPT',
-  'Open in Claude',
+  'Open in scira.ai',
+  'Open in perplexity.ai',
+  'Open in grok.com',
+  'Open in chatgpt.com',
+  'Open in claude.ai',
   '|',
   'Open in Claude Desktop',
   '|',
@@ -24,10 +24,10 @@ const customMenu = [
   '在 GitHub 中打开',
   '以 Markdown 查看',
   '|',
-  '在 Scira AI 中打开',
-  '在 Perplexity 中打开',
-  '在 ChatGPT 中打开',
-  '在 Claude 中打开',
+  '在 scira.ai 中打开',
+  '在 perplexity.ai 中打开',
+  '在 chatgpt.com 中打开',
+  '在 claude.ai 中打开',
   '|',
   '在 Cursor 中打开',
 ]
@@ -145,10 +145,11 @@ export async function checkApp(base: string, shots: string): Promise<number> {
 
     const href = (name: string) =>
       page.getByRole('link', { name, exact: true }).getAttribute('href')
-    const claude = new URL((await href('Open in Claude'))!)
+    const claude = new URL((await href('Open in claude.ai'))!)
     check(
       'prompt names the page URL',
-      claude.searchParams.get('q') === `Read ${base}/docs, I want to ask questions about it.`,
+      claude.searchParams.get('q') ===
+        `Read ${base}/docs in full first. I have some questions for you:`,
       claude.searchParams.get('q'),
     )
     const code = new URL((await href('Open in Claude Code'))!)
@@ -181,7 +182,7 @@ export async function checkApp(base: string, shots: string): Promise<number> {
 
     if (width > 500) {
       await page.mouse.move(0, 0)
-      await page.getByRole('link', { name: 'Open in Claude', exact: true }).hover()
+      await page.getByRole('link', { name: 'Open in claude.ai', exact: true }).hover()
       await settle(page)
       // the copy button, the trigger and the menu
       const box = await trigger.evaluate(el => {
@@ -229,12 +230,13 @@ export async function checkApp(base: string, shots: string): Promise<number> {
     )
     const zh = new URL(
       (await page
-        .getByRole('link', { name: '在 Claude 中打开', exact: true })
+        .getByRole('link', { name: '在 claude.ai 中打开', exact: true })
         .getAttribute('href'))!,
     )
     check(
       'pageUrl prop names the page',
-      zh.searchParams.get('q') === '阅读 https://docs.acme.dev/custom，我想询问相关问题。',
+      zh.searchParams.get('q') ===
+        '请先完整阅读 https://docs.acme.dev/custom，我有一些问题需要询问你：',
       zh.searchParams.get('q'),
     )
 

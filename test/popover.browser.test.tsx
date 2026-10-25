@@ -23,11 +23,11 @@ const props: ViewOptionsPopoverProps = {
 const allTitles = [
   'Open in GitHub',
   'View as Markdown',
-  'Open in Scira AI',
-  'Open in Perplexity',
-  'Open in Grok',
-  'Open in ChatGPT',
-  'Open in Claude',
+  'Open in scira.ai',
+  'Open in perplexity.ai',
+  'Open in grok.com',
+  'Open in chatgpt.com',
+  'Open in claude.ai',
   'Open in Claude Desktop',
   'Open in Claude Code',
   'Open in Codex',
@@ -110,11 +110,11 @@ describe.each(entries)('ViewOptionsPopover from %s', (_, load) => {
       'Open in GitHub',
       'View as Markdown',
       '|',
-      'Open in Scira AI',
-      'Open in Perplexity',
-      'Open in Grok',
-      'Open in ChatGPT',
-      'Open in Claude',
+      'Open in scira.ai',
+      'Open in perplexity.ai',
+      'Open in grok.com',
+      'Open in chatgpt.com',
+      'Open in claude.ai',
       '|',
       'Open in Claude Desktop',
       '|',
@@ -136,7 +136,7 @@ describe.each(entries)('ViewOptionsPopover from %s', (_, load) => {
   it('names links by their text only', async () => {
     const trigger = await mount()
     await trigger.click()
-    await expect.element(link('Open in ChatGPT')).toBeVisible()
+    await expect.element(link('Open in chatgpt.com')).toBeVisible()
     expect(page.getByRole('link').elements()).toHaveLength(allTitles.length)
     for (const el of page.getByRole('link').elements()) {
       expect(el.querySelector('title')).toBeNull()
@@ -147,9 +147,9 @@ describe.each(entries)('ViewOptionsPopover from %s', (_, load) => {
   it('fills the page URL into the prompts', async () => {
     const trigger = await mount()
     await trigger.click()
-    await expect.element(link('Open in Claude')).toBeVisible()
-    expect(query('Open in Claude', 'q')).toBe(
-      `Read ${location.origin}${location.pathname}, I want to ask questions about it.`,
+    await expect.element(link('Open in claude.ai')).toBeVisible()
+    expect(query('Open in claude.ai', 'q')).toBe(
+      `Read ${location.origin}${location.pathname} in full first. I have some questions for you:`,
     )
     expect(query('Open in Claude Code', 'repo')).toBe('acme/docs')
     expect(query('Open in Claude Code', 'branch')).toBe('main')
@@ -158,8 +158,10 @@ describe.each(entries)('ViewOptionsPopover from %s', (_, load) => {
   it('uses the pageUrl prop over the current location', async () => {
     const trigger = await mount({ pageUrl: 'https://docs.acme.dev/intro' })
     await trigger.click()
-    await expect.element(link('Open in Claude')).toBeVisible()
-    expect(query('Open in Claude', 'q')).toContain('https://docs.acme.dev/intro,')
+    await expect.element(link('Open in claude.ai')).toBeVisible()
+    expect(query('Open in claude.ai', 'q')).toBe(
+      'Read https://docs.acme.dev/intro in full first. I have some questions for you:',
+    )
   })
 
   it('applies the items toggles to the menu and the trigger', async () => {
@@ -173,10 +175,10 @@ describe.each(entries)('ViewOptionsPopover from %s', (_, load) => {
       'Open in GitHub',
       'View as Markdown',
       '|',
-      'Open in Scira AI',
-      'Open in Perplexity',
-      'Open in ChatGPT',
-      'Open in Claude',
+      'Open in scira.ai',
+      'Open in perplexity.ai',
+      'Open in chatgpt.com',
+      'Open in claude.ai',
       '|',
       'Open in Cursor',
     ])
@@ -191,7 +193,7 @@ describe.each(entries)('ViewOptionsPopover from %s', (_, load) => {
     const trigger = await mount({ locale: 'zh-CN', labels: { open: '问 AI' } })
     await trigger.click()
     await expect.element(link('在 Claude 桌面版中打开')).toBeVisible()
-    expect(query('在 Claude 中打开', 'q')).toMatch(/^阅读 .+，我想询问相关问题。$/)
+    expect(query('在 claude.ai 中打开', 'q')).toMatch(/^请先完整阅读 .+，我有一些问题需要询问你：$/)
   })
 
   it('renders custom trigger children and forwards button props', async () => {
@@ -213,11 +215,11 @@ describe.each(entries)('ViewOptionsPopover from %s', (_, load) => {
     const el = trigger.element()
     const idle = getComputedStyle(el).backgroundColor
     await trigger.click()
-    await expect.element(link('Open in Claude')).toBeVisible()
+    await expect.element(link('Open in claude.ai')).toBeVisible()
     await settle()
     expect(getComputedStyle(el).backgroundColor).not.toBe(idle)
     await userEvent.keyboard('{Escape}')
-    await expect.element(link('Open in Claude')).not.toBeInTheDocument()
+    await expect.element(link('Open in claude.ai')).not.toBeInTheDocument()
   })
 
   it('shows the arrow and the full icon color on hover and keyboard focus', async () => {

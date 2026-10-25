@@ -70,7 +70,8 @@ describe('getPageActions', () => {
   })
 
   it('builds the provider URLs with the encoded prompt', () => {
-    const prompt = 'Read https://example.com/docs/intro, I want to ask questions about it.'
+    const prompt =
+      'Read https://example.com/docs/intro in full first. I have some questions for you:'
 
     expect(read(hrefOf(base, 'scira'))).toEqual({ q: prompt })
     expect(read(hrefOf(base, 'claude-desktop'))).toEqual({ q: prompt })
@@ -93,7 +94,7 @@ describe('getPageActions', () => {
   it('encodes characters that would break the query', () => {
     const href = hrefOf({ ...base, pageUrl: 'https://example.com/a?x=1&y=2#h' }, 'claude')
     expect(new URL(href!).searchParams.get('q')).toBe(
-      'Read https://example.com/a?x=1&y=2#h, I want to ask questions about it.',
+      'Read https://example.com/a?x=1&y=2#h in full first. I have some questions for you:',
     )
   })
 
@@ -117,12 +118,12 @@ describe('getPageActions', () => {
 
   it('uses the labels of the locale', () => {
     const groups = getPageActions({ ...base, labels: pageActionLabels['zh-CN'] })
-    expect(groups.flat().find(item => item.id === 'claude')?.title).toBe('在 Claude 中打开')
+    expect(groups.flat().find(item => item.id === 'claude')?.title).toBe('在 claude.ai 中打开')
     expect(
       new URL(hrefOf({ ...base, labels: pageActionLabels['zh-TW'] }, 'claude')!).searchParams.get(
         'q',
       ),
-    ).toBe('閱讀 https://example.com/docs/intro，我想詢問相關問題。')
+    ).toBe('請先完整閱讀 https://example.com/docs/intro，我有一些問題需要詢問你：')
   })
 
   it('prefixes the Vite base path to the Markdown URL', () => {
