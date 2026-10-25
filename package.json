@@ -1,6 +1,6 @@
 {
   "name": "fumadocs-extras",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Drop-in extras for Fumadocs UI, starting with a grouped \"Open in AI\" page actions menu",
   "keywords": [
     "ai",
